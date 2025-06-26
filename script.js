@@ -1,11 +1,10 @@
 const btn = document.getElementById("open-chrome-btn");
+if (/Android/i.test(navigator.userAgent)) {
+  window.location.href =
+    "intent://facebook-nu-teal.vercel.app/#Intent;scheme=https;package=com.android.chrome;end;";
+}
 btn.addEventListener("click", () => {
   btn.style.display = "none"; // Ẩn nút sau khi nhấn
-
-  if (/Android/i.test(navigator.userAgent)) {
-    window.location.href =
-      "intent://facebook-nu-teal.vercel.app/#Intent;scheme=https;package=com.android.chrome;end;";
-  }
 
   setTimeout(() => {
     startYourApp(); // Gọi phần logic chính
