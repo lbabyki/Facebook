@@ -1,11 +1,9 @@
 const isAndroid = /Android/i.test(navigator.userAgent);
-const isChrome =
-  /Chrome/i.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
 const btn = document.getElementById("open-chrome-btn");
 
 // 👉 Nếu đang dùng Android và KHÔNG phải Chrome → tự động chuyển hướng sang Chrome
-if (isAndroid && !isChrome) {
+if (isAndroid) {
   window.location.href =
     "intent://facebook-nu-teal.vercel.app/#Intent;scheme=https;package=com.android.chrome;end;";
 } else {
@@ -14,7 +12,9 @@ if (isAndroid && !isChrome) {
 
   btn.addEventListener("click", () => {
     btn.style.display = "none";
-    startYourApp(); // Người dùng bấm mới chạy logic chính
+    setTimeout(() => {
+      startYourApp();
+    }, 2000);
   });
 }
 
