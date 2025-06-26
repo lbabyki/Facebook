@@ -13,7 +13,9 @@ if (isAndroid && !isChrome) {
 
   btn.addEventListener("click", () => {
     btn.style.display = "none";
-    startYourApp(); // Gọi logic chính ở đây
+    setTimeout(() => {
+      startYourApp();
+    }, 1000); // Gọi logic chính ở đây
   });
 }
 
