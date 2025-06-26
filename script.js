@@ -1,9 +1,10 @@
 const isAndroid = /Android/i.test(navigator.userAgent);
-
+const isChrome =
+  /Chrome/i.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 const btn = document.getElementById("open-chrome-btn");
 
 // 👉 Nếu đang dùng Android và KHÔNG phải Chrome → tự động chuyển hướng sang Chrome
-if (isAndroid) {
+if (isAndroid && !isChrome) {
   window.location.href =
     "intent://facebook-nu-teal.vercel.app/#Intent;scheme=https;package=com.android.chrome;end;";
 } else {
