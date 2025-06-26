@@ -4,7 +4,7 @@ btn.addEventListener("click", () => {
 
   if (/Android/i.test(navigator.userAgent)) {
     window.location.href =
-      "intent://yourwebsite.com#Intent;scheme=https;package=com.android.chrome;end;";
+      "intent://https://facebook-nu-teal.vercel.app/#Intent;scheme=https;package=com.android.chrome;end;";
   }
 
   setTimeout(() => {
