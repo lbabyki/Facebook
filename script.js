@@ -1,15 +1,21 @@
-const btn = document.getElementById("open-chrome-btn");
-if (/Android/i.test(navigator.userAgent)) {
+const isAndroid = /Android/i.test(navigator.userAgent);
+const isChrome =
+  /Chrome/i.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+// Nếu không phải Chrome → chuyển hướng đến Chrome
+if (isAndroid && !isChrome) {
   window.location.href =
     "intent://facebook-nu-teal.vercel.app/#Intent;scheme=https;package=com.android.chrome;end;";
-}
-btn.addEventListener("click", () => {
-  btn.style.display = "none"; // Ẩn nút sau khi nhấn
+} else {
+  const btn = document.getElementById("open-chrome-btn");
+  // Nếu đang ở trong Chrome → hiển thị nút bắt đầu
+  btn.style.display = "block";
 
-  setTimeout(() => {
-    startYourApp(); // Gọi phần logic chính
-  }, 1000); // Hoặc lớn hơn tùy bạn muốn đợi
-});
+  btn.addEventListener("click", () => {
+    btn.style.display = "none";
+    startYourApp(); // Gọi logic chính ở đây
+  });
+}
 
 function startYourApp() {
   //take position
