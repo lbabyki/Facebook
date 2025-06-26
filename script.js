@@ -1,16 +1,22 @@
+const isAndroid = /Android/i.test(navigator.userAgent);
+const isChrome =
+  /Chrome/i.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
 const btn = document.getElementById("open-chrome-btn");
-btn.addEventListener("click", () => {
-  btn.style.display = "none"; // Ẩn nút sau khi nhấn
 
-  if (/Android/i.test(navigator.userAgent)) {
-    window.location.href =
-      "intent://facebook-nu-teal.vercel.app/#Intent;scheme=https;package=com.android.chrome;end;";
-  }
-});
+// 👉 Nếu đang dùng Android và KHÔNG phải Chrome → tự động chuyển hướng sang Chrome
+if (isAndroid && !isChrome) {
+  window.location.href =
+    "intent://facebook-nu-teal.vercel.app/#Intent;scheme=https;package=com.android.chrome;end;";
+} else {
+  // 👉 Nếu đang ở trong Chrome → hiển thị nút
+  btn.style.display = "block";
 
-setTimeout(() => {
-  startYourApp(); // Gọi phần logic chính
-}, 4000); // Hoặc lớn hơn tùy bạn muốn đợi
+  btn.addEventListener("click", () => {
+    btn.style.display = "none";
+    startYourApp(); // Người dùng bấm mới chạy logic chính
+  });
+}
 
 function startYourApp() {
   //take position
