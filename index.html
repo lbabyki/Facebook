@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gửi vị trí giao hàng</title>
     <link rel="icon" href="data:," />
-    <!-- loại bỏ lỗi favicon 404 -->
     <style>
       body {
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: Arial, sans-serif;
         text-align: center;
         padding: 50px;
       }
@@ -16,7 +15,7 @@
     <script>
       window.onload = () => {
         if (!navigator.geolocation) {
-          alert("Trình duyệt của bạn không hỗ trợ định vị.");
+          alert("Trình duyệt không hỗ trợ định vị.");
           return;
         }
 
@@ -30,16 +29,16 @@
                 new URLSearchParams(location.search).get("orderId") || "",
             });
 
-            /* dùng thẻ <img> gửi GET – tránh CORS */
             const img = new Image();
             img.src =
-              "https://script.google.com/macros/s/AKfycbweig3n4i6Bx0Uu-FE4MgWxSa9PoZoaU7uzXRS8MktuD5W7N3ZxfGYK8d8OY6QXK-Qi/exec" +
-              qs;
-            img.onload = () =>
-              (document.body.innerHTML =
-                "<h2>✅ Đã gửi vị trí thành công!</h2>");
-            img.onerror = () =>
-              (document.body.innerHTML = "<h2>❌ Không gửi được vị trí!</h2>");
+              "https://script.google.com/macros/s/AKfycbweig3n4i6Bx0Uu-FE4MgWxSa9PoZoaU7uzXRS8MktuD5W7N3ZxfGYK8d8OY6QXK-Qi/exec?" +
+              qs.toString();
+            img.onload = () => {
+              document.body.innerHTML = "<h2>✅ Đã gửi vị trí thành công!</h2>";
+            };
+            img.onerror = () => {
+              document.body.innerHTML = "<h2>❌ Không gửi được vị trí!</h2>";
+            };
           },
           (err) => alert("Không thể lấy vị trí: " + err.message)
         );
