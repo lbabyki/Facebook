@@ -99,9 +99,9 @@ letter.addEventListener("click", () => {
   const typingTextElement = document.getElementById("typing-text");
   const typingTextElementLove = document.getElementById("typing-text-love");
   const typingelementlove = document.getElementById("love-text");
-  const text = "8/3 vui vẻ nha";
-  const text2 = "Cuộc sống nhẹ nhàng hơn";
-  const text3 = "Tui quý bà lắm á 🥰😌";
+  const text = "1 món quà gửi đến cho bạn";
+  const text2 = "Đây là tâm ý của người gửi";
+  const text3 = "Chúc bạn một ngày vui vẻ nha! ";
   const typingSpeed = 100; // Tốc độ gõ chữ (ms)
   let typingStarted = false;
 
